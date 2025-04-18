@@ -1,0 +1,31 @@
+﻿@model List<iScent.Models.Parfum>
+
+@{
+    ViewData["Title"] = "Alle Parfums";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Entdecke unsere Parfums</h1>
+    <div class="row">
+        @foreach (var parfum in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <a href="@Url.Action("Details", "Parfums", new { id = parfum.Id })"
+                   class="text-decoration-none text-dark">
+                    <div class="card parfum-card shadow-sm h-100">
+                        <img src="@parfum.BildUrl" class="card-img-top" alt="@parfum.Name"
+                             style="height: 400px; object-fit: contain;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@parfum.Name</h5>
+                            <p class="card-text"><strong>Marke:</strong> @parfum.Marke</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+

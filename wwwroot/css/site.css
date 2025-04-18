@@ -1,0 +1,27 @@
+body {
+    background-color: #f8f9fa; /* hellgrau */
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3 {
+    color: #6c63ff; /* zartes Lila */
+}
+
+.btn-dark {
+    background-color: #6c63ff;
+    border: none;
+}
+
+    .btn-dark:hover {
+        background-color: #5548c8;
+    }
+
+.parfum-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .parfum-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+    }

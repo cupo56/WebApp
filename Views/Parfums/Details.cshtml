@@ -1,0 +1,15 @@
+﻿@model iScent.Models.Parfum
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<h1>@Model.Name</h1>
+
+<img src="@Model.BildUrl" alt="@Model.Name" class="img-fluid mb-3" style="max-width: 300px;" />
+
+<p><strong>Marke:</strong> @Model.Marke</p>
+<p><strong>Beschreibung:</strong> @Model.Beschreibung</p>
+<p><strong>Duftnoten:</strong> @Model.Duftnoten</p>
+
+<a href="@Url.Action("Index", "Parfums")" class="btn btn-secondary">Zurück zur Übersicht</a>
