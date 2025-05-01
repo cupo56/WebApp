@@ -4,22 +4,26 @@
     ViewData["Title"] = "Alle Parfums";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center page-title">Alle Parfums</h1>
 
-<div class="container mt-5">
-    <h1 class="mb-4 text-center">Entdecke unsere Parfums</h1>
-    <div class="row">
+<div class="container mt-3 parfum-list-container">
+    <h2 class="text-center text-primary mb-5">Entdecke alle Parfums</h2>
+    <div class="row justify-content-center" id="parfumContainer">
         @foreach (var parfum in Model)
         {
-            <div class="col-md-4 mb-4">
-                <a href="@Url.Action("Details", "Parfums", new { id = parfum.Id })"
-                   class="text-decoration-none text-dark">
-                    <div class="card parfum-card shadow-sm h-100">
-                        <img src="@parfum.BildUrl" class="card-img-top" alt="@parfum.Name"
-                             style="height: 400px; object-fit: contain;" />
+            <div class="col-6 col-sm-4 col-md-3 parfum-item d-flex align-items-stretch mb-4"
+                 data-name="@parfum.Name?.ToLower()"
+                 data-marke="@parfum.Marke?.ToLower()"
+                 data-kopfnote="@parfum.Kopfnote?.ToLower()"
+                 data-herznote="@parfum.Herznote?.ToLower()"
+                 data-basisnote="@parfum.Basisnote?.ToLower()">
+
+                <a href="@Url.Action("Details", "Parfums", new { id = parfum.Id })" class="text-decoration-none text-dark w-100">
+                    <div class="card parfum-card h-100 text-center">
+                        <img src="@parfum.BildUrl" class="card-img-top p-3" alt="@parfum.Name" style="height: 250px; object-fit: contain;" />
                         <div class="card-body">
-                            <h5 class="card-title">@parfum.Name</h5>
-                            <p class="card-text"><strong>Marke:</strong> @parfum.Marke</p>
+                            <h6 class="card-title">@parfum.Name</h6>
+                            <p class="card-text mb-2"><strong>Marke:</strong> @parfum.Marke</p>
                         </div>
                     </div>
                 </a>
@@ -27,5 +31,6 @@
         }
     </div>
 </div>
+
 
 

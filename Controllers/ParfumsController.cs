@@ -1,42 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using iScent.Models;
-using System.Collections.Generic;
-using System.Linq;
+﻿using iScent.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace iScent.Controllers
 {
     public class ParfumsController : Controller
     {
-        private static List<Parfum> _parfums = new()
-        {
-            new Parfum
-            {
-                Id = 1,
-                Name = "Dior Sauvage",
-                Marke = "Dior",
-                Beschreibung = "Frischer, würziger Herrenduft mit einem modernen Twist.",
-                Duftnoten = "Bergamotte, Ambroxan, Pfeffer",
-                BildUrl = "/images/sauvage.svg"
-            },
-            new Parfum
-            {
-                Id = 2,
-                Name = "Miss Dior Eau de Parfum",
-                Marke = "Dior",
-                Beschreibung = "Romantischer, blumiger Damenduft mit Noten von Rose und Pfingstrose.",
-                Duftnoten = "Rose, Pfingstrose, Iris, Vanille",
-                BildUrl = "/images/missdior.svg"
-            }
-        };
+        private readonly ApplicationDbContext _context;
 
-        public IActionResult Index()
+        public ParfumsController(ApplicationDbContext context)
         {
-            return View(_parfums);
+            _context = context;
+        }
+
+
+        public IActionResult Index(string search)
+        {
+            var parfums = _context.Parfums.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                parfums = parfums.Where(p =>
+                    p.Name.ToLower().Contains(search) ||
+                    p.Marke.ToLower().Contains(search) ||
+                    (p.Kopfnote != null && p.Kopfnote.ToLower().Contains(search)) ||
+                    (p.Herznote != null && p.Herznote.ToLower().Contains(search)) ||
+                    (p.Basisnote != null && p.Basisnote.ToLower().Contains(search)));
+            }
+
+            return View(parfums.ToList());
         }
 
         public IActionResult Details(int id)
         {
-            var parfum = _parfums.FirstOrDefault(p => p.Id == id);
+            var parfum = _context.Parfums.FirstOrDefault(p => p.Id == id);
             if (parfum == null) return NotFound();
 
             return View(parfum);

@@ -8,36 +8,44 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/iScent.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-            <div class="container">
+<body class="d-flex flex-column min-vh-100">
+        <header class="sticky-top bg-white shadow-sm z-3">
+            <nav class="navbar navbar-expand-lg navbar-light">
+
+            <div class="container d-flex justify-content-between align-items-center">
+                <!-- Logo -->
                 <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">iScent</a>
-                <button class="navbar-toggler" ...></button>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Start</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Parfums" asp-action="Index">Parfums</a>
-                        </li>
-                    </ul>
-                </div>
+
+                <!-- Zentrale Suchleiste -->
+                <form class="d-none d-lg-flex mx-auto w-50" onsubmit="return false;">
+                    <input type="text" id="globalLiveSearch" class="form-control me-2" placeholder="Parfum suchen..." />
+                </form>
+
+                <!-- Rechts: Navigation -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Start</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Parfums" asp-action="Index">Parfums</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="flex-fill pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted mt-auto">
         <div class="container">
             &copy; 2025 - iScent - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,7 +1,13 @@
+using iScent.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite("Data Source=parfums.db"));
+
 
 var app = builder.Build();
 
@@ -24,5 +30,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Parfums}/{action=Index}/{id?}");
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.EnsureCreated(); // Falls nicht vorhanden, erzeugen
+    DbInitializer.Seed(db);      // Parfums einfügen
+}
 
 app.Run();
