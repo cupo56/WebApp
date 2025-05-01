@@ -5,58 +5,49 @@
 
     var icons = new Dictionary<string, string>
 {
-    { "bergamotte", "🍋" },
-    { "pfeffer", "🌶️" },
-    { "ambroxan", "🧪" },
-    { "vetiver", "🌿" },
-    { "lavendel", "🪻" },
-    { "rose", "🌹" },
-    { "pfingstrose", "💐" },
-    { "iris", "🪻" },
-    { "vanille", "🍦" },
-    { "moschus", "🦌" },
-    { "sandelholz", "🌳" },
-    { "jasmin", "🌼" },
-    { "sichuanpfeffer", "🌶️" },
-    { "rosenholz", "🌸" },
-    { "kardamom", "🟤" },
-    { "oud", "🪵" },
-    { "tonkabohne", "🌰" },
-    { "amber", "🧡" },
-    { "grapefruit", "🍊" },
-    { "quitte", "🍐" },
-    { "hyazinthe", "🌺" },
-    { "zeder", "🌲" },
-    { "minze", "🌿" },
-    { "kreuzkümmel", "🧂" },
-    { "zimt", "🟤" },
-    { "tuberose", "🌼" },
-    { "orangenblüte", "🍊" },
-    { "zedernholz", "🌲" },
-    { "grüner apfel", "🍏" },
-    { "zitrone", "🍋" },
-    { "geranie", "🌸" }
+{ "bergamotte", "🍋" },
+{ "pfeffer", "🌶️" },
+{ "ambroxan", "🧪" },
+{ "vetiver", "🌿" },
+{ "lavendel", "🪻" },
+{ "rose", "🌹" },
+{ "pfingstrose", "💐" },
+{ "iris", "🪻" },
+{ "vanille", "🍦" },
+{ "moschus", "🦌" },
+{ "sandelholz", "🌳" },
+{ "jasmin", "🌼" },
+{ "sichuanpfeffer", "🌶️" },
+{ "rosenholz", "🌸" },
+{ "kardamom", "🟤" },
+{ "oud", "🪵" },
+{ "tonkabohne", "🌰" },
+{ "amber", "🧡" },
+{ "grapefruit", "🍊" },
+{ "quitte", "🍐" },
+{ "hyazinthe", "🌺" },
+{ "zeder", "🌲" },
+{ "minze", "🌿" },
+{ "kreuzkümmel", "🧂" },
+{ "zimt", "🟤" },
+{ "tuberose", "🌼" },
+{ "orangenblüte", "🍊" },
+{ "zedernholz", "🌲" },
+{ "grüner apfel", "🍏" },
+{ "zitrone", "🍋" },
+{ "geranie", "🌸" }
 };
-
     Func<string?, List<(string, string)>> ParseNoten = (noten) =>
-        noten?.Split(',')
-              .Select(n => n.Trim().ToLower())
-              .Where(n => !string.IsNullOrWhiteSpace(n))
-              .Select(n => (
-                  System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(n),
-                  icons.ContainsKey(n) ? icons[n] : "✨"
-              ))
-              .ToList() ?? new();
+    noten?.Split(',')
+    .Select(n => n.Trim().ToLower())
+    .Where(n => !string.IsNullOrWhiteSpace(n))
+    .Select(n => (
+    System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(n),
+    icons.ContainsKey(n) ? icons[n] : "✨"
+    ))
+    .ToList() ?? new();
 }
-
 <h1 class="text-center mt-5 text-primary fw-bold">@Model.Name</h1>
-
-<div class="text-center mb-4">
-    <img src="@Model.BildUrl" alt="@Model.Name" style="max-height: 400px;" />
-</div>
-
-<p class="text-center"><strong>Marke:</strong> @Model.Marke</p>
-
 @{
     var kopfnoten = ParseNoten(Model.Kopfnote);
     var herznoten = ParseNoten(Model.Herznote);
@@ -67,56 +58,56 @@
     var basisnoteClass = basisnoten.Count >= 3 ? "parfum-note-grid mb-4" : "parfum-note-grid mb-2";
 }
 
+<div class="d-flex justify-content-center align-items-start flex-wrap gap-4 mt-4">
 
-<!-- 🌬️ Kopfnote -->
-@if (kopfnoten.Any())
-{
-    <h4 class="text-center mt-4">🌬️ Kopfnote</h4>
-    <div class="@kopfnoteClass">
-        @foreach (var (note, icon) in kopfnoten)
+    <!-- Parfum-Bild zentriert -->
+    <div class="text-center" style="flex-shrink: 0;">
+        <img src="@Model.BildUrl" alt="@Model.Name" style="max-height: 400px;" class="img-fluid" />
+        <p class="mt-3"><strong>Marke:</strong> @Model.Marke</p>
+    </div>
+    <!-- Duftnoten rechts daneben -->
+
+    <div style="min-width: 300px; max-width: 500px;">
+        @if (kopfnoten.Any())
         {
-            <div class="badge bg-light text-dark border shadow-sm parfum-note">
-                <div style="font-size: 1.6rem;">@icon</div>
-                <div class="mt-1">@note</div>
+            <h4 class="mt-4 fw-bold text-center">Kopfnote:</h4>
+            <div class="duftnoten-list mb-3">
+                @foreach (var (note, icon) in kopfnoten)
+                {
+                    <div class="duftnote-item">
+                        <span class="duftnote-icon">@icon</span>
+                        <span class="duftnote-name">@note</span>
+                    </div>
+                }
+            </div>
+        }
+        @if (herznoten.Any())
+        {
+            <h4 class="mt-4 fw-bold text-center">Herznote:</h4>
+            <div class="duftnoten-list mb-3">
+                @foreach (var (note, icon) in herznoten)
+                {
+                    <div class="duftnote-item">
+                        <span class="duftnote-icon">@icon</span>
+                        <span class="duftnote-name">@note</span>
+                    </div>
+                }
+            </div>
+        }
+
+
+        @if (basisnoten.Any())
+        {
+            <h4 class="mt-4 fw-bold text-center">Basisnote:</h4>
+            <div class="duftnoten-list mb-3">
+                @foreach (var (note, icon) in basisnoten)
+                {
+                    <div class="duftnote-item">
+                        <span class="duftnote-icon">@icon</span>
+                        <span class="duftnote-name">@note</span>
+                    </div>
+                }
             </div>
         }
     </div>
-}
-
-<!-- 💖 Herznote -->
-@if (herznoten.Any())
-{
-    <h4 class="text-center mt-4">💖 Herznote</h4>
-    <div class="@herznoteClass">
-        @foreach (var (note, icon) in herznoten)
-        {
-            <div class="badge bg-light text-dark border shadow-sm parfum-note">
-                <div style="font-size: 1.6rem;">@icon</div>
-                <div class="mt-1">@note</div>
-            </div>
-        }
-    </div>
-}
-
-
-<!-- 🪵 Basisnote -->
-@if (basisnoten.Any())
-{
-    <h4 class="text-center mt-4">🪵 Basisnote</h4>
-    <div class="@basisnoteClass">
-        @foreach (var (note, icon) in basisnoten)
-        {
-            <div class="badge bg-light text-dark border shadow-sm parfum-note">
-                <div style="font-size: 1.6rem;">@icon</div>
-                <div class="mt-1">@note</div>
-            </div>
-        }
-    </div>
-}
-
-
-<p class="text-center mt-4">@Model.Beschreibung</p>
-
-<div class="text-center mt-4">
-    <a href="@Url.Action("Index", "Parfums")" class="btn btn-outline-secondary">Zurück</a>
 </div>

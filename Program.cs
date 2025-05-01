@@ -34,7 +34,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.EnsureCreated(); // Falls nicht vorhanden, erzeugen
-    DbInitializer.Seed(db);      // Parfums einfügen
+    DbInitializer.Seed(db);      // Parfums einfï¿½gen
 }
 
 app.Run();
